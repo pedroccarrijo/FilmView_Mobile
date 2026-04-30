@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "250810585865",
+    "project_id": "filmview-mobile",
+    "storage_bucket": "filmview-mobile.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250810585865:android:936a9e4d8ba9c01a6379d8",
+        "android_client_info": {
+          "package_name": "com.example.filmview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6AOBPL2UbNZw-7j-wHN4dtsZhTgtHTKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
