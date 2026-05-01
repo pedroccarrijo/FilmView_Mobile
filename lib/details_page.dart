@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsPage extends StatefulWidget {
   final Map item;
@@ -53,6 +54,47 @@ class _DetailsPageState extends State<DetailsPage> {
       final int? seasons = _itemDetails['number_of_seasons'];
       if (seasons == null) return '';
       return '$seasons Temporada${seasons > 1 ? 's' : ''}';
+    }
+  }
+
+  Future<void> _launchTrailer() async {
+    // 1. Mostra um aviso de carregamento rápido
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Buscando trailer...')),
+    );
+
+    final type = widget.isMovie ? 'movie' : 'tv';
+    // 2. Busca vídeos em PT-BR
+    var url = Uri.parse('https://api.themoviedb.org/3/$type/${widget.item['id']}/videos?api_key=$apiKey&language=pt-BR');
+
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        List results = data['results'];
+        
+        // 3.Se não achar busca em Inglês!
+        if (results.isEmpty) {
+          url = Uri.parse('https://api.themoviedb.org/3/$type/${widget.item['id']}/videos?api_key=$apiKey&language=en-US');
+          response = await http.get(url);
+          results = json.decode(response.body)['results'];
+        }
+
+        if (results.isNotEmpty) {
+          // 4. Pega o primeiro vídeo
+          final videoKey = results.firstWhere((v) => v['type'] == 'Trailer', orElse: () => results[0])['key'];
+          final youtubeUrl = Uri.parse('https://www.youtube.com/watch?v=$videoKey');
+          
+          // 5. Abre o YouTube
+          if (!await launchUrl(youtubeUrl, mode: LaunchMode.externalApplication)) {
+            if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Não foi possível abrir o vídeo.')));
+          }
+        } else {
+          if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Nenhum trailer encontrado para este título.')));
+        }
+      }
+    } catch (e) {
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erro ao buscar o trailer.')));
     }
   }
 
@@ -185,12 +227,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Abrindo trailer no YouTube...')),
-                        );
-                      },
+                      onPressed: _launchTrailer,
                       icon: const Icon(Icons.play_arrow,
                           color: Color(0xFF141414)),
                       label: const Text('ASSISTIR TRAILER',

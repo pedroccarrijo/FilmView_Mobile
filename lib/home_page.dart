@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'details_page.dart';
-import 'login_page.dart'; // Importação necessária para o Logout voltar a funcionar aqui
+import 'login_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -116,7 +116,6 @@ class _HomePageState extends State<HomePage> {
     _fetchData();
   }
 
-  // Função do botão de sair adicionada de volta
   Future<void> _logout() async {
     await FirebaseAuth.instance.signOut();
     if (mounted) {
@@ -134,7 +133,6 @@ class _HomePageState extends State<HomePage> {
     int startPage = _currentPage > 2 ? _currentPage - 2 : 1;
     List<int> visiblePages = List.generate(5, (index) => startPage + index);
 
-    // LÓGICA DO TÍTULO DINÂMICO
     String dynamicTitle = '';
     if (_searchQuery.isNotEmpty) {
       dynamicTitle = 'Resultados para: "$_searchQuery"';
@@ -317,7 +315,7 @@ class _HomePageState extends State<HomePage> {
               dynamicTitle,
               style: const TextStyle(
                   color: Colors
-                      .white, // Deixei branco para dar destaque contra o amarelo dos botões
+                      .white, 
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_page.dart';
-import 'main_screen.dart'; // Importante para redirecionar quem já está logado
+import 'main_screen.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,11 +37,11 @@ class FilmViewApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xFF0A0A0A),
       ),
-      // MÁGICA AQUI: O AuthStateChanges verifica se você já fez login antes
+
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          // Enquanto verifica, mostra tela de carregamento vazia
+         
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
               body: Center(
@@ -49,7 +49,7 @@ class FilmViewApp extends StatelessWidget {
               ),
             );
           }
-          // Se encontrou usuário salvo, vai pra MainScreen. Senão, LoginPage.
+          
           if (snapshot.hasData) {
             return const MainScreen();
           }
