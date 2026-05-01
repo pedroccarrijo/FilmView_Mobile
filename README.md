@@ -12,9 +12,7 @@ Um aplicativo nativo de catálogo de filmes e séries desenvolvido em **Flutter*
 - **Design System Consistente:** Interface em "Dark Mode" com detalhes em `#FFBB2F`, garantindo conforto visual e usabilidade premium.
 
 ## 🌐 Teste o App
-*(Escolha uma das opções abaixo e apague a outra)*
-**Opção A (Link Web):** [Acesse o App Online Aqui](link_da_vercel_ou_firebase_hosting)
-**Opção B (Baixar APK):** O arquivo instalável `app-release.apk` está disponível na raiz deste repositório para instalação em dispositivos Android.
+(Baixar APK):** O arquivo instalável `app-release.apk` está disponível na raiz deste repositório para instalação em dispositivos Android.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -40,6 +38,8 @@ flutter pub get
 # 4. Inicie o aplicativo (certifique-se de ter um emulador ou dispositivo conectado)
 flutter run
 
+```
+Arquitetura 
 Usuário (Celular / Navegador)
    │
    ├──> Camada de Apresentação (Flutter Widgets)
