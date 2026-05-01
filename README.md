@@ -38,7 +38,7 @@ flutter pub get
 # 4. Inicie o aplicativo (certifique-se de ter um emulador ou dispositivo conectado)
 flutter run
 
-```
+
 Arquitetura 
 Usuário (Celular / Navegador)
    │
